@@ -7,6 +7,7 @@ define('init', ['ember', 'handlebars'], function (INIT) {
     return App;
 });
 
+
 require(['init'], function(App) {
 
     App.Router.map(function(){
@@ -14,19 +15,37 @@ require(['init'], function(App) {
     });
 
     App.ApplicationRoute = Ember.Route.extend({
+
         model: function(){
-            return 1;
+
+            return ["Thing 1", "Thing 2", "Thing 3", "Thing 4", "Something Else..."];
         },
+
         renderTemplate: function() {
-            this.render('application')
+            this.render('application');
         }
 
     });
 
     App.ApplicationController = Ember.Controller.extend({
-        hello: "This is the message",
+
+        hello: "Hello to you",
+
+        dynoForm: null,
+
         init: function() {
-            console.log('We are in');
+            var controller = this;
+
+            var newHello = controller.get('hello');
+            console.log(newHello);
+        },
+
+        actions: {
+            getDyno: function(inputVal) {
+                var controller = this;
+                var dynoValue = controller.get('dynoForm');
+                console.log(dynoValue);
+            }
         }
     });
 });
