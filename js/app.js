@@ -14,11 +14,19 @@ require(['init'], function(App) {
        this.resource('application', { path: '/'});
     });
 
+
     App.ApplicationRoute = Ember.Route.extend({
 
         model: function(){
+             var local = $.ajax({
+                 url: 'http://0.0.0.0',
 
-            return ["Thing 1", "Thing 2", "Thing 3", "Thing 4", "Something Else..."];
+             }).done(function(data){
+                console.log(data);
+                 return data;
+             });
+
+            return local
         },
 
         renderTemplate: function() {
@@ -27,9 +35,26 @@ require(['init'], function(App) {
 
     });
 
+    App.List = Ember.Object.extend({
+        name: null
+    });
+
     App.ApplicationController = Ember.Controller.extend({
 
         hello: "Hello to you",
+
+        list: Ember.computed.alias('model'),
+
+        items: null,
+
+        updateList: function(){
+
+            var controller = this;
+            var model = controller.get('model');
+
+        //    controller.set('list', model);
+
+        }.observes('model'),
 
         dynoForm: null,
 
@@ -45,6 +70,67 @@ require(['init'], function(App) {
                 var controller = this;
                 var dynoValue = controller.get('dynoForm');
                 console.log(dynoValue);
+            },
+            search: function(inputVal) {
+
+                var controller = this;
+                var query = $('#search').val();
+               
+
+                var payload = {
+                    query: query
+                };
+          
+                $.ajax({
+                    url: 'http://0.0.0.0/search',
+                    type: 'POST',
+                    data: payload,
+                }).done(function(data){
+                    console.log('Posted');
+                    console.log(data);
+
+                    $('#status').html(data._id);
+                return data;
+             });
+
+                console.log(payload);
+            },
+            createUser: function(inputVal) {
+
+                var password = $('#password').val();
+                var username = $('#username').val();
+                var controller = this;
+
+                var payload = {
+                    username: username,
+                    password: password
+                };
+          
+                $.ajax({
+                    url: 'http://0.0.0.0',
+                    type: 'POST',
+                    data: payload,
+                }).done(function(data){
+                    console.log('Posted');
+                    console.log(data);
+
+                    $('#status').html(data.created);
+                return data;
+             });
+
+                console.log(payload);
+            },
+            newItem: function(){
+                var controller = this;
+                var list = controller.get('model');
+
+
+                list.push('My string');
+
+                console.log(list);
+
+
+
             }
         }
     });

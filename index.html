@@ -9,17 +9,42 @@
 <div class="APP_ROOT">
 
     <script type="text/x-handlebars">
+    
         {{outlet}}
         {{hello}}
 
         <h1>{{dynoForm}}</h1>
         {{input valueBinding=dynoForm}}
 
-
   <a type="button" href="#" class="btn" {{action 'getDyno'}}> Get Input Value </a>
 
+  <a type="button" class="btn btn-default" {{action 'newItem'}}> Add New Item </a>
         {{anyName}}
-        {{model}}
+
+        {{#each item in model}}
+            {{item.amount}}
+        {{/each}}
+
+        {{input valueBinding=model}}
+
+        <br>
+
+        <input class="text" placeholder="Username ... " id="username">
+        <input class="text" placeholder="Password ... " id="password" type="password">
+
+
+        <a type="button" href="#" class="btn" {{action 'createUser'}}>Create User</a>
+
+        <div class="lead" id="status">
+        <br>
+
+        <input class="text" id="search">
+        <a type="button" href="#" class="btn" {{action 'search'}}> Find </a>
+        <br>
+        <br>
+
+        <div class="natural" contentEditable="true"></div>
+
 
     </script>
 
