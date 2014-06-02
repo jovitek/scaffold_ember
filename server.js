@@ -73,6 +73,16 @@ app.post('/', function(req, res){
 	});
 });
 
+app.post('/natural', function(req, res){
+
+	res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
+    res.send(req.body.natural);
+	
+	
+});
+
 app.post('/search', function(req, res){
 
 	res.header("Access-Control-Allow-Origin", "*");
