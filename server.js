@@ -2,6 +2,8 @@ var mongoose  = require('mongoose');
 
 var express = require('express');
 
+var natural = require('natural');
+
 var bodyParser = require('body-parser')
 
 var app = express();
@@ -75,10 +77,14 @@ app.post('/', function(req, res){
 
 app.post('/natural', function(req, res){
 
+	var find = "unhappy mad pissed broken support";
+
+	var score = natural.JaroWinklerDistance(find, req.body.natural);
+
 	res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
-    res.send(req.body.natural);
+    res.send(JSON.stringify(score));
 	
 	
 });
